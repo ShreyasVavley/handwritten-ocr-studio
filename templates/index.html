@@ -3,23 +3,24 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>ScribeCraft • Handwritten Notes to Digital Text</title>
+  <title>ScribeCraft Pro • Intelligent Document & Handwriting OCR</title>
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;500;600;700&family=Caveat:wght@600&display=swap" rel="stylesheet">
   <style>
     :root {
-      /* Warm Ivory & Natural Cream Palette */
       --ivory-bg: #fcfbf9;
       --ivory-card: #ffffff;
       --card-border: #ede8df;
-      --border-dark: #27272a;
-      --text-main: #1c1917;      /* Warm charcoal / obsidian */
-      --text-muted: #78716c;     /* Warm stone gray */
-      --accent-black: #18181b;   /* Deep charcoal black */
-      --ivory-subtle: #f7f5f0;   /* Cream highlight */
+      --text-main: #1c1917;
+      --text-muted: #78716c;
+      --accent-black: #18181b;
+      --ivory-subtle: #f7f5f0;
       --ivory-hover: #f1ede4;
-      --accent-gold: #b45309;
+      --success: #15803d;
+      --success-bg: #f0fdf4;
+      --badge-pro: #0284c7;
+      --badge-pro-bg: #e0f2fe;
     }
 
     * { box-sizing: border-box; margin: 0; padding: 0; }
@@ -32,59 +33,55 @@
       display: flex;
       flex-direction: column;
       align-items: center;
-      padding: 50px 20px 80px;
+      padding: 40px 20px 80px;
       -webkit-font-smoothing: antialiased;
     }
 
-    /* Elegant brand badge */
-    .brand-pill {
+    .header {
+      text-align: center;
+      max-width: 700px;
+      margin-bottom: 30px;
+    }
+
+    .badge-wrap {
       display: inline-flex;
       align-items: center;
       gap: 8px;
       background: var(--ivory-subtle);
       border: 1px solid var(--card-border);
-      color: var(--text-main);
-      padding: 7px 18px;
+      padding: 6px 16px;
       border-radius: 9999px;
       font-size: 0.8rem;
       font-weight: 600;
-      letter-spacing: 0.04em;
-      text-transform: uppercase;
-      margin-bottom: 22px;
-      box-shadow: 0 1px 2px rgba(0, 0, 0, 0.02);
+      margin-bottom: 16px;
     }
 
-    .brand-pill span.dot {
-      width: 7px;
-      height: 7px;
+    .pro-pill {
       background: var(--accent-black);
-      border-radius: 50%;
-    }
-
-    .hero-header {
-      text-align: center;
-      max-width: 660px;
-      margin-bottom: 36px;
+      color: #ffffff;
+      font-size: 0.72rem;
+      padding: 2px 8px;
+      border-radius: 9999px;
+      letter-spacing: 0.05em;
+      text-transform: uppercase;
+      font-weight: 700;
     }
 
     h1 {
-      font-size: 2.85rem;
+      font-size: 2.75rem;
       font-weight: 700;
       letter-spacing: -0.035em;
       line-height: 1.15;
-      margin-bottom: 14px;
-      color: var(--text-main);
+      margin-bottom: 12px;
     }
 
     h1 span.handwritten {
       font-family: 'Caveat', cursive;
-      font-size: 3.3rem;
+      font-size: 3.2rem;
       font-weight: 600;
-      color: #000000;
       text-decoration: underline;
       text-decoration-thickness: 2px;
       text-underline-offset: 6px;
-      padding: 0 4px;
     }
 
     p.subtitle {
@@ -96,12 +93,60 @@
     /* Main Container */
     .portal-box {
       width: 100%;
-      max-width: 740px;
+      max-width: 800px;
       background: var(--ivory-card);
       border: 1px solid var(--card-border);
-      border-radius: 22px;
-      padding: 38px;
-      box-shadow: 0 10px 30px -10px rgba(28, 25, 23, 0.05), 0 1px 3px rgba(0, 0, 0, 0.02);
+      border-radius: 24px;
+      padding: 36px;
+      box-shadow: 0 10px 30px -10px rgba(28, 25, 23, 0.05);
+    }
+
+    /* Pro Features Toolbar */
+    .pro-toolbar {
+      background: var(--ivory-subtle);
+      border: 1px solid var(--card-border);
+      border-radius: 14px;
+      padding: 14px 18px;
+      margin-bottom: 24px;
+      display: flex;
+      flex-wrap: wrap;
+      justify-content: space-between;
+      align-items: center;
+      gap: 12px;
+    }
+
+    .toolbar-title {
+      font-size: 0.82rem;
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: 0.05em;
+      color: var(--text-main);
+      display: flex;
+      align-items: center;
+      gap: 6px;
+    }
+
+    .toggles-group {
+      display: flex;
+      gap: 14px;
+      flex-wrap: wrap;
+    }
+
+    .toggle-label {
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      font-size: 0.84rem;
+      font-weight: 500;
+      color: var(--text-main);
+      cursor: pointer;
+    }
+
+    .toggle-label input[type="checkbox"] {
+      accent-color: var(--accent-black);
+      width: 15px;
+      height: 15px;
+      cursor: pointer;
     }
 
     /* Drop Zone */
@@ -109,17 +154,16 @@
       position: relative;
       border: 2px dashed #ded7cb;
       border-radius: 16px;
-      padding: 46px 24px;
+      padding: 44px 24px;
       text-align: center;
       cursor: pointer;
       background: var(--ivory-subtle);
-      transition: all 0.2s cubic-bezier(0.4, 0, 0.2, 1);
+      transition: all 0.2s ease;
     }
 
     .drop-zone:hover, .drop-zone.dragover {
       border-color: var(--accent-black);
       background: var(--ivory-hover);
-      transform: translateY(-1px);
     }
 
     .drop-zone input[type="file"] {
@@ -134,13 +178,13 @@
     .upload-icon {
       width: 48px;
       height: 48px;
-      margin: 0 auto 16px;
+      margin: 0 auto 14px;
       border-radius: 14px;
       background: var(--accent-black);
       display: flex;
       align-items: center;
       justify-content: center;
-      box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+      box-shadow: 0 4px 10px rgba(0, 0, 0, 0.08);
     }
 
     .upload-icon svg {
@@ -154,7 +198,7 @@
     .drop-title {
       font-size: 1.08rem;
       font-weight: 600;
-      margin-bottom: 5px;
+      margin-bottom: 4px;
       color: var(--text-main);
     }
 
@@ -163,53 +207,58 @@
       font-size: 0.86rem;
     }
 
-    /* Preview Section */
-    .preview-section {
-      margin-top: 24px;
+    /* File Queue Tray */
+    .queue-tray {
+      margin-top: 18px;
       display: none;
     }
 
-    .preview-header {
+    .queue-header {
       display: flex;
       justify-content: space-between;
       align-items: center;
-      margin-bottom: 10px;
-      font-size: 0.82rem;
+      margin-bottom: 8px;
+      font-size: 0.8rem;
       font-weight: 600;
-      color: var(--text-muted);
       text-transform: uppercase;
-      letter-spacing: 0.05em;
+      letter-spacing: 0.04em;
+      color: var(--text-muted);
     }
 
-    .btn-clear {
+    .queue-items {
+      display: flex;
+      flex-direction: column;
+      gap: 6px;
+      max-height: 150px;
+      overflow-y: auto;
+    }
+
+    .queue-item {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      background: var(--ivory-subtle);
+      border: 1px solid var(--card-border);
+      padding: 8px 14px;
+      border-radius: 8px;
+      font-size: 0.85rem;
+    }
+
+    .queue-item-name {
+      font-weight: 500;
+      display: flex;
+      align-items: center;
+      gap: 6px;
+    }
+
+    .btn-clear-all {
       background: none;
       border: none;
       color: var(--text-main);
-      font-size: 0.82rem;
+      font-size: 0.8rem;
       font-weight: 600;
       cursor: pointer;
       text-decoration: underline;
-      text-underline-offset: 3px;
-    }
-    .btn-clear:hover { opacity: 0.65; }
-
-    .preview-frame {
-      background: #ffffff;
-      border: 1px solid var(--card-border);
-      border-radius: 14px;
-      padding: 18px;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      max-height: 210px;
-      overflow: hidden;
-      box-shadow: inset 0 1px 3px rgba(0,0,0,0.02);
-    }
-
-    .preview-img {
-      max-width: 100%;
-      max-height: 174px;
-      object-fit: contain;
     }
 
     /* Action Buttons */
@@ -238,11 +287,6 @@
     .btn-transcribe:hover:not(:disabled) {
       background: #27272a;
       transform: translateY(-1px);
-      box-shadow: 0 6px 18px rgba(24, 24, 27, 0.18);
-    }
-
-    .btn-transcribe:active:not(:disabled) {
-      transform: translateY(0);
     }
 
     .btn-transcribe:disabled {
@@ -250,76 +294,102 @@
       border-color: #e7e4dc;
       color: #a8a29e;
       cursor: not-allowed;
-      box-shadow: none;
-      transform: none;
     }
 
     /* Result Section */
     .result-section {
-      margin-top: 28px;
+      margin-top: 30px;
       background: var(--ivory-subtle);
       border: 1px solid var(--card-border);
       border-radius: 16px;
       padding: 24px;
       display: none;
-      animation: fadeIn 0.25s ease-out;
-    }
-
-    @keyframes fadeIn {
-      from { opacity: 0; transform: translateY(6px); }
-      to { opacity: 1; transform: translateY(0); }
     }
 
     .result-top {
       display: flex;
       justify-content: space-between;
       align-items: center;
-      margin-bottom: 12px;
+      margin-bottom: 14px;
+      flex-wrap: wrap;
+      gap: 10px;
     }
 
     .result-label {
-      font-size: 0.8rem;
+      font-size: 0.82rem;
       font-weight: 700;
       text-transform: uppercase;
-      letter-spacing: 0.06em;
+      letter-spacing: 0.05em;
       color: var(--text-main);
-      display: flex;
-      align-items: center;
-      gap: 6px;
     }
 
-    .btn-copy {
+    /* Export Controls */
+    .export-tray {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+
+    .export-label {
+      font-size: 0.8rem;
+      color: var(--text-muted);
+      font-weight: 600;
+    }
+
+    .btn-export {
       background: #ffffff;
       border: 1px solid var(--card-border);
       color: var(--text-main);
-      padding: 6px 14px;
+      padding: 6px 12px;
       border-radius: 8px;
-      font-size: 0.82rem;
+      font-size: 0.8rem;
       font-weight: 600;
       cursor: pointer;
+      display: inline-flex;
+      align-items: center;
+      gap: 4px;
       transition: all 0.15s ease;
-      box-shadow: 0 1px 2px rgba(0,0,0,0.03);
     }
 
-    .btn-copy:hover {
-      background: var(--ivory-hover);
-      border-color: #d6cfc2;
+    .btn-export:hover {
+      background: var(--accent-black);
+      border-color: var(--accent-black);
+      color: #ffffff;
     }
 
-    .transcription-output {
+    .transcription-feed {
+      display: flex;
+      flex-direction: column;
+      gap: 12px;
+      max-height: 420px;
+      overflow-y: auto;
+    }
+
+    .feed-card {
       background: #ffffff;
       border: 1px solid var(--card-border);
       border-radius: 12px;
-      padding: 20px;
-      font-size: 1.15rem;
-      font-weight: 500;
+      padding: 16px;
+    }
+
+    .feed-title {
+      font-size: 0.78rem;
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: 0.04em;
+      color: var(--text-muted);
+      margin-bottom: 6px;
+    }
+
+    .feed-text {
+      font-size: 1.05rem;
       line-height: 1.6;
       color: var(--text-main);
-      min-height: 64px;
+      white-space: pre-wrap;
       word-break: break-word;
     }
 
-    /* Sample Chips */
+    /* Samples */
     .samples-section {
       margin-top: 32px;
       padding-top: 24px;
@@ -347,21 +417,18 @@
       color: var(--text-main);
       padding: 8px 16px;
       border-radius: 10px;
-      font-size: 0.85rem;
+      font-size: 0.84rem;
       font-weight: 500;
       cursor: pointer;
       transition: all 0.15s ease;
-      box-shadow: 0 1px 2px rgba(0,0,0,0.02);
     }
 
     .sample-chip:hover {
       background: var(--accent-black);
       border-color: var(--accent-black);
       color: #ffffff;
-      transform: translateY(-1px);
     }
 
-    /* Minimal Spinner */
     .spinner {
       width: 18px;
       height: 18px;
@@ -384,80 +451,110 @@
 </head>
 <body>
 
-  <div class="brand-pill">
-    <span class="dot"></span>
-    <span>AI Document Transcription</span>
-  </div>
-
-  <header class="hero-header">
+  <header class="header">
+    <div class="badge-wrap">
+      <span class="pro-pill">PRO</span>
+      <span>Multi-Page PDF & Batch OCR Studio</span>
+    </div>
     <h1>Turn <span class="handwritten">handwritten notes</span> into clear text</h1>
-    <p class="subtitle">Drop a quick snapshot of your handwriting, prescriptions, or notes. The visual OCR model transcribes it in seconds.</p>
+    <p class="subtitle">Upload whole multi-page PDFs or batch image files with automatic deskew, contrast boost, and multi-format exports.</p>
   </header>
 
   <main class="portal-box">
+    
+    <!-- Pro Enhancement Toolbar -->
+    <div class="pro-toolbar">
+      <div class="toolbar-title">
+        <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"></polygon></svg>
+        AI Enhancement Filters
+      </div>
+      <div class="toggles-group">
+        <label class="toggle-label">
+          <input type="checkbox" id="toggleDeskew" checked> Auto-Deskew
+        </label>
+        <label class="toggle-label">
+          <input type="checkbox" id="toggleContrast" checked> Contrast Boost (CLAHE)
+        </label>
+        <label class="toggle-label">
+          <input type="checkbox" id="toggleBinarize"> Adaptive Binarization
+        </label>
+      </div>
+    </div>
+
+    <!-- Drop Zone -->
     <div class="drop-zone" id="dropZone">
-      <input type="file" id="fileInput" accept="image/*">
+      <input type="file" id="fileInput" accept="image/*,.pdf" multiple>
       <div class="upload-icon">
         <svg viewBox="0 0 24 24"><path d="M12 3v13M5 10l7-7 7 7M4 21h16" stroke-linecap="round" stroke-linejoin="round"/></svg>
       </div>
-      <div class="drop-title">Select or drop handwritten image</div>
-      <div class="drop-hint">PNG, JPG, or WEBP • Single lines or snippets</div>
+      <div class="drop-title">Drop PDF or multiple images here</div>
+      <div class="drop-hint">Supports Multi-page PDF, PNG, JPG, WEBP • Batch upload ready</div>
     </div>
 
-    <div class="preview-section" id="previewSection">
-      <div class="preview-header">
-        <span>Image Preview</span>
-        <button class="btn-clear" id="btnClear">Remove</button>
+    <!-- Queue Tray -->
+    <div class="queue-tray" id="queueTray">
+      <div class="queue-header">
+        <span id="queueCount">Files Ready (0)</span>
+        <button class="btn-clear-all" id="btnClearAll">Clear all</button>
       </div>
-      <div class="preview-frame">
-        <img id="previewImg" class="preview-img" alt="Uploaded Document Preview">
-      </div>
+      <div class="queue-items" id="queueItems"></div>
     </div>
 
     <div class="actions">
       <button class="btn-transcribe" id="submitBtn" disabled>
         <span class="spinner" id="spinner"></span>
-        <span id="btnText">Transcribe Handwriting</span>
+        <span id="btnText">Process & Transcribe Batch</span>
       </button>
     </div>
 
+    <!-- Result & Export Section -->
     <div class="result-section" id="resultSection">
       <div class="result-top">
-        <span class="result-label">Transcribed Text</span>
-        <button class="btn-copy" id="btnCopy">Copy</button>
+        <span class="result-label">Transcribed Results</span>
+        <div class="export-tray">
+          <span class="export-label">Export:</span>
+          <button class="btn-export" onclick="triggerExport('docx')">📄 Word (.docx)</button>
+          <button class="btn-export" onclick="triggerExport('pdf')">📑 PDF</button>
+          <button class="btn-export" onclick="triggerExport('csv')">📊 CSV</button>
+          <button class="btn-export" onclick="triggerExport('txt')">📝 TXT</button>
+        </div>
       </div>
-      <div class="transcription-output" id="transcriptionOutput">...</div>
+      <div class="transcription-feed" id="transcriptionFeed"></div>
     </div>
 
     <div class="samples-section">
-      <div class="samples-label">Or test with a sample:</div>
-      <div class="sample-chips" id="sampleChips">
-        <!-- populated dynamically -->
-      </div>
+      <div class="samples-label">Test with a sample snippet:</div>
+      <div class="sample-chips" id="sampleChips"></div>
     </div>
+
   </main>
 
   <footer>
-    <p>ScribeCraft • Clean Ivory Edition</p>
+    <p>ScribeCraft Pro • Powered by EasyOCR + Computer Vision Pipeline</p>
   </footer>
 
   <script>
     const dropZone = document.getElementById('dropZone');
     const fileInput = document.getElementById('fileInput');
-    const previewSection = document.getElementById('previewSection');
-    const previewImg = document.getElementById('previewImg');
-    const btnClear = document.getElementById('btnClear');
+    const queueTray = document.getElementById('queueTray');
+    const queueCount = document.getElementById('queueCount');
+    const queueItems = document.getElementById('queueItems');
+    const btnClearAll = document.getElementById('btnClearAll');
     const submitBtn = document.getElementById('submitBtn');
     const spinner = document.getElementById('spinner');
     const btnText = document.getElementById('btnText');
     const resultSection = document.getElementById('resultSection');
-    const transcriptionOutput = document.getElementById('transcriptionOutput');
-    const btnCopy = document.getElementById('btnCopy');
+    const transcriptionFeed = document.getElementById('transcriptionFeed');
     const sampleChips = document.getElementById('sampleChips');
 
-    let currentFile = null;
+    const toggleDeskew = document.getElementById('toggleDeskew');
+    const toggleContrast = document.getElementById('toggleContrast');
+    const toggleBinarize = document.getElementById('toggleBinarize');
 
-    // Load available samples
+    let queuedFiles = [];
+    let latestCombinedText = "";
+
+    // Load sample snippets
     fetch('/samples')
       .then(res => res.json())
       .then(samples => {
@@ -465,97 +562,137 @@
           const chip = document.createElement('button');
           chip.className = 'sample-chip';
           chip.textContent = `Sample #${idx + 1}`;
-          chip.onclick = () => loadSample(sample.url);
+          chip.onclick = () => loadSample(sample.url, sample.label);
           sampleChips.appendChild(chip);
         });
       });
 
-    function loadSample(url) {
-      previewImg.src = url;
-      previewSection.style.display = 'block';
-      submitBtn.disabled = false;
-      resultSection.style.display = 'none';
-
+    function loadSample(url, name) {
       fetch(url)
         .then(r => r.blob())
         .then(blob => {
-          currentFile = new File([blob], "sample.png", { type: "image/png" });
+          const file = new File([blob], name, { type: "image/png" });
+          queuedFiles = [file];
+          renderQueue();
         });
     }
 
+    function renderQueue() {
+      queueItems.innerHTML = '';
+      if (queuedFiles.length === 0) {
+        queueTray.style.display = 'none';
+        submitBtn.disabled = true;
+        return;
+      }
+
+      queueTray.style.display = 'block';
+      queueCount.textContent = `Files Ready (${queuedFiles.length})`;
+      submitBtn.disabled = false;
+
+      queuedFiles.forEach((f, i) => {
+        const item = document.createElement('div');
+        item.className = 'queue-item';
+        item.innerHTML = `
+          <span class="queue-item-name">📄 ${f.name}</span>
+          <span style="color: var(--text-muted); font-size: 0.8rem;">${(f.size / 1024).toFixed(1)} KB</span>
+        `;
+        queueItems.appendChild(item);
+      });
+    }
+
     fileInput.addEventListener('change', (e) => {
-      const file = e.target.files[0];
-      if (file) {
-        currentFile = file;
-        const reader = new FileReader();
-        reader.onload = (ev) => {
-          previewImg.src = ev.target.result;
-          previewSection.style.display = 'block';
-          submitBtn.disabled = false;
-          resultSection.style.display = 'none';
-        };
-        reader.readAsDataURL(file);
+      if (e.target.files.length) {
+        queuedFiles = Array.from(e.target.files);
+        renderQueue();
       }
     });
 
-    btnClear.addEventListener('click', () => {
-      currentFile = null;
+    btnClearAll.addEventListener('click', () => {
+      queuedFiles = [];
       fileInput.value = '';
-      previewSection.style.display = 'none';
-      submitBtn.disabled = true;
+      renderQueue();
       resultSection.style.display = 'none';
     });
 
-    dropZone.addEventListener('dragover', (e) => {
-      e.preventDefault();
-      dropZone.classList.add('dragover');
-    });
-
+    dropZone.addEventListener('dragover', (e) => { e.preventDefault(); dropZone.classList.add('dragover'); });
     dropZone.addEventListener('dragleave', () => dropZone.classList.remove('dragover'));
-
     dropZone.addEventListener('drop', (e) => {
       e.preventDefault();
       dropZone.classList.remove('dragover');
       if (e.dataTransfer.files.length) {
-        fileInput.files = e.dataTransfer.files;
-        fileInput.dispatchEvent(new Event('change'));
+        queuedFiles = Array.from(e.dataTransfer.files);
+        renderQueue();
       }
     });
 
     submitBtn.addEventListener('click', async () => {
-      if (!currentFile) return;
+      if (queuedFiles.length === 0) return;
 
       submitBtn.disabled = true;
       spinner.style.display = 'inline-block';
-      btnText.textContent = 'Transcribing...';
+      btnText.textContent = `Analyzing & Transcribing ${queuedFiles.length} file(s)...`;
       resultSection.style.display = 'none';
 
       const formData = new FormData();
-      formData.append('image', currentFile);
+      queuedFiles.forEach(f => formData.append('files', f));
+      formData.append('deskew', toggleDeskew.checked);
+      formData.append('contrast', toggleContrast.checked);
+      formData.append('binarize', toggleBinarize.checked);
 
       try {
-        const resp = await fetch('/predict', {
+        const resp = await fetch('/predict_batch', {
           method: 'POST',
           body: formData
         });
         const data = await resp.json();
-        transcriptionOutput.textContent = data.text || "No text detected.";
+        latestCombinedText = data.combined_text || "";
+
+        transcriptionFeed.innerHTML = "";
+        data.results.forEach(res => {
+          const card = document.createElement('div');
+          card.className = 'feed-card';
+          card.innerHTML = `
+            <div class="feed-title">${res.file}</div>
+            <div class="feed-text">${res.text}</div>
+          `;
+          transcriptionFeed.appendChild(card);
+        });
+
         resultSection.style.display = 'block';
       } catch (err) {
-        transcriptionOutput.textContent = "Error transcribing image.";
-        resultSection.style.display = 'block';
+        alert("Error processing batch: " + err);
       } finally {
         submitBtn.disabled = false;
         spinner.style.display = 'none';
-        btnText.textContent = 'Transcribe Handwriting';
+        btnText.textContent = 'Process & Transcribe Batch';
       }
     });
 
-    btnCopy.addEventListener('click', () => {
-      navigator.clipboard.writeText(transcriptionOutput.textContent);
-      btnCopy.textContent = 'Copied!';
-      setTimeout(() => btnCopy.textContent = 'Copy', 2000);
-    });
+    function triggerExport(format) {
+      if (!latestCombinedText.trim()) {
+        alert("No text to export!");
+        return;
+      }
+      const form = document.createElement('form');
+      form.method = 'POST';
+      form.action = '/export';
+
+      const formatInput = document.createElement('input');
+      formatInput.type = 'hidden';
+      formatInput.name = 'format';
+      formatInput.value = format;
+
+      const textInput = document.createElement('input');
+      textInput.type = 'hidden';
+      textInput.name = 'text';
+      textInput.value = latestCombinedText;
+
+      form.appendChild(formatInput);
+      form.appendChild(textInput);
+      document.body.appendChild(form);
+      form.submit();
+      document.body.removeChild(form);
+    }
   </script>
 </body>
 </html>
