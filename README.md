@@ -1,27 +1,29 @@
 # ScribeCraft • Handwritten Text Recognition (HTR) Studio
 
-> **An AI-powered document transcription web application designed with a minimalist Ivory aesthetic and powered by deep neural OCR.**
+<div align="center">
 
-[![Python](https://img.shields.io/badge/Python-3.10%2B-blue.svg)](https://www.python.org/)
-[![Framework](https://img.shields.io/badge/Framework-Flask%20%2B%20EasyOCR-black.svg)](https://github.com/JaidedAI/EasyOCR)
-[![License](https://img.shields.io/badge/License-MIT-green.svg)](LICENSE)
+![CI Status](https://github.com/ShreyasVavley/handwritten-ocr-studio/actions/workflows/ci.yml/badge.svg)
+[![Python Version](https://img.shields.io/badge/Python-3.10%20%7C%203.11%20%7C%203.12%20%7C%203.13-blue.svg)](https://www.python.org/)
+[![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT)
+[![Framework: Flask](https://img.shields.io/badge/Web%20App-Flask-black.svg)](https://flask.palletsprojects.com/)
+[![OCR Engine: EasyOCR](https://img.shields.io/badge/OCR%20Engine-EasyOCR%20%2B%20PyTorch-orange.svg)](https://github.com/JaidedAI/EasyOCR)
+[![Code Style: Black](https://img.shields.io/badge/Code%20Style-Black-000000.svg)](https://github.com/psf/black)
+
+<p align="center">
+  <strong>An AI-powered document transcription web application designed with a minimalist Ivory aesthetic and powered by deep neural OCR.</strong>
+</p>
+
+</div>
 
 ---
 
 ## 🌟 Highlights
 - **Intelligent Handwriting Recognition**: Accurately recognizes cursive handwriting, doctor notes, signatures, and natural script using deep CRAFT text detection and ResNet-LSTM sequence recognition.
 - **Ivory & Obsidian UI**: A serene, distraction-free aesthetic with warm ivory canvas (`#fcfbf9`), crisp cards, smooth drag-and-drop file upload, and one-click clipboard copy.
-- **Instant Sample Testing**: Includes pre-loaded synthetic handwriting snippets to test transcription speed and accuracy out of the box.
-- **Fine-Tuning Toolchain**: Contains end-to-end pipelines for generating custom cursive datasets and fine-tuning CRNN/CTC or Tesseract 5 LSTM models on Google Colab or cloud GPUs.
-
----
-
-## 🖼️ UI Preview
-The portal features an elegant, humanized interface with:
-- Drag-and-drop single-line or cropped handwritten text uploads.
-- Instant live image preview and removal controls.
-- Fast local inference on CPU or GPU.
-- Clean typography pairing **Space Grotesk** and natural **Caveat** script.
+- **Multi-Page PDF & Batch Processing**: Ingest and transcribe entire multi-page PDF documents or image batches in parallel.
+- **Automatic Image Enhancement**: Built-in automated deskew, contrast boost (CLAHE), and adaptive binarization filters.
+- **Multi-Format Exports**: One-click download as Word (`.docx`), Searchable PDF, Spreadsheet CSV, or plain text.
+- **Fine-Tuning Toolchain**: End-to-end pipelines for generating custom synthetic cursive handwriting datasets and fine-tuning CRNN/CTC or Tesseract 5 LSTM models on Google Colab.
 
 ---
 
@@ -52,7 +54,10 @@ http://127.0.0.1:5000
 ## 🛠️ Project Structure
 ```
 handwritten-ocr-studio/
+├── .github/workflows/ci.yml   # Automated GitHub Actions CI workflow
 ├── app.py                     # Flask web server & EasyOCR inference engine
+├── enhancement.py             # Image enhancement (deskew, CLAHE contrast, binarization)
+├── exporters.py               # Exporters for .docx, .pdf, .csv, and .txt
 ├── templates/
 │   └── index.html             # Minimalist Ivory & Obsidian web interface
 ├── sample_test_data/          # Sample handwriting images & ground truth pairs
@@ -67,24 +72,5 @@ handwritten-ocr-studio/
 
 ---
 
-## 🔬 Model Training & Fine-Tuning
-
-### Synthetic Handwriting Generation
-Generate synthetic cursive lines with random variations (rotation, ink bleed, and paper textures):
-```bash
-python generate_synthetic_data.py --count 150 --out data/my_handwriting-ground-truth
-```
-
-### Train Custom CRNN Model
-Train a lightweight PyTorch sequence-to-sequence model locally:
-```bash
-python train_htr_model.py --data sample_test_data --epochs 30
-```
-
-### Cloud GPU Fine-Tuning
-Upload `Tesseract_HTR_FineTuning.ipynb` to [Google Colab](https://colab.research.google.com/) for high-precision fine-tuning using `tessdata_best`.
-
----
-
 ## 📜 License
-This project is open-source and available under the [MIT License](LICENSE).
+Distributed under the MIT License. See `LICENSE` for more information.
