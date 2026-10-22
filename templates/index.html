@@ -1,0 +1,538 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>ScribeCraft • Monochrome OCR Studio</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;600;700&family=Caveat:wght@600&display=swap" rel="stylesheet">
+  <style>
+    :root {
+      --bg: #ffffff;
+      --card-bg: #ffffff;
+      --border: #e4e4e7;
+      --border-dark: #18181b;
+      --text-main: #09090b;
+      --text-muted: #71717a;
+      --accent-black: #000000;
+      --subtle-gray: #f4f4f5;
+    }
+
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+
+    body {
+      font-family: 'Space Grotesk', -apple-system, BlinkMacSystemFont, sans-serif;
+      background-color: var(--bg);
+      color: var(--text-main);
+      min-height: 100vh;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      padding: 60px 20px 80px;
+      -webkit-font-smoothing: antialiased;
+    }
+
+    /* Top minimalist badge */
+    .brand-tag {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      background: var(--subtle-gray);
+      border: 1px solid var(--border);
+      color: var(--text-main);
+      padding: 6px 16px;
+      border-radius: 9999px;
+      font-size: 0.8rem;
+      font-weight: 600;
+      letter-spacing: 0.05em;
+      text-transform: uppercase;
+      margin-bottom: 20px;
+    }
+
+    .brand-tag span.dot {
+      width: 7px;
+      height: 7px;
+      background: var(--accent-black);
+      border-radius: 50%;
+    }
+
+    .hero-header {
+      text-align: center;
+      max-width: 640px;
+      margin-bottom: 40px;
+    }
+
+    h1 {
+      font-size: 2.75rem;
+      font-weight: 700;
+      letter-spacing: -0.04em;
+      line-height: 1.15;
+      margin-bottom: 14px;
+      color: var(--text-main);
+    }
+
+    h1 span.handwritten {
+      font-family: 'Caveat', cursive;
+      font-size: 3.2rem;
+      font-weight: 600;
+      text-decoration: underline;
+      text-decoration-thickness: 2px;
+      text-underline-offset: 6px;
+    }
+
+    p.subtitle {
+      color: var(--text-muted);
+      font-size: 1.05rem;
+      line-height: 1.6;
+    }
+
+    /* Main Container */
+    .main-box {
+      width: 100%;
+      max-width: 720px;
+      background: var(--card-bg);
+      border: 1px solid var(--border);
+      border-radius: 20px;
+      padding: 36px;
+      box-shadow: 0 4px 20px rgba(0, 0, 0, 0.04);
+    }
+
+    /* Drop Zone */
+    .drop-zone {
+      position: relative;
+      border: 2px dashed #d4d4d8;
+      border-radius: 14px;
+      padding: 44px 24px;
+      text-align: center;
+      cursor: pointer;
+      background: #fafafa;
+      transition: all 0.2s ease;
+    }
+
+    .drop-zone:hover, .drop-zone.dragover {
+      border-color: var(--accent-black);
+      background: #f4f4f5;
+    }
+
+    .drop-zone input[type="file"] {
+      position: absolute;
+      inset: 0;
+      width: 100%;
+      height: 100%;
+      opacity: 0;
+      cursor: pointer;
+    }
+
+    .upload-icon {
+      width: 44px;
+      height: 44px;
+      margin: 0 auto 14px;
+      border-radius: 12px;
+      background: var(--accent-black);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+
+    .upload-icon svg {
+      width: 22px;
+      height: 22px;
+      stroke: #ffffff;
+      fill: none;
+      stroke-width: 2;
+    }
+
+    .drop-title {
+      font-size: 1.05rem;
+      font-weight: 600;
+      margin-bottom: 4px;
+      color: var(--text-main);
+    }
+
+    .drop-hint {
+      color: var(--text-muted);
+      font-size: 0.85rem;
+    }
+
+    /* Preview Section */
+    .preview-section {
+      margin-top: 24px;
+      display: none;
+    }
+
+    .preview-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 10px;
+      font-size: 0.85rem;
+      font-weight: 600;
+      color: var(--text-muted);
+      text-transform: uppercase;
+      letter-spacing: 0.04em;
+    }
+
+    .btn-clear {
+      background: none;
+      border: none;
+      color: var(--text-main);
+      font-size: 0.82rem;
+      font-weight: 600;
+      cursor: pointer;
+      text-decoration: underline;
+    }
+
+    .btn-clear:hover { opacity: 0.6; }
+
+    .preview-frame {
+      background: #ffffff;
+      border: 1px solid var(--border);
+      border-radius: 12px;
+      padding: 16px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      max-height: 200px;
+      overflow: hidden;
+    }
+
+    .preview-img {
+      max-width: 100%;
+      max-height: 168px;
+      object-fit: contain;
+    }
+
+    /* Action Button */
+    .actions {
+      margin-top: 24px;
+    }
+
+    .btn-submit {
+      width: 100%;
+      padding: 16px;
+      border: 1px solid var(--accent-black);
+      border-radius: 12px;
+      background: var(--accent-black);
+      color: #ffffff;
+      font-size: 1rem;
+      font-weight: 600;
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 10px;
+      transition: all 0.15s ease;
+    }
+
+    .btn-submit:hover:not(:disabled) {
+      background: #27272a;
+      border-color: #27272a;
+      transform: translateY(-1px);
+    }
+
+    .btn-submit:active:not(:disabled) {
+      transform: translateY(0);
+    }
+
+    .btn-submit:disabled {
+      background: #e4e4e7;
+      border-color: #e4e4e7;
+      color: #a1a1aa;
+      cursor: not-allowed;
+      transform: none;
+    }
+
+    /* Result Card */
+    .result-section {
+      margin-top: 28px;
+      background: #fafafa;
+      border: 1px solid var(--border);
+      border-radius: 14px;
+      padding: 22px;
+      display: none;
+    }
+
+    .result-top {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 12px;
+    }
+
+    .result-label {
+      font-size: 0.8rem;
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: 0.06em;
+      color: var(--text-main);
+    }
+
+    .btn-copy {
+      background: #ffffff;
+      border: 1px solid var(--border);
+      color: var(--text-main);
+      padding: 6px 12px;
+      border-radius: 8px;
+      font-size: 0.8rem;
+      font-weight: 600;
+      cursor: pointer;
+      transition: all 0.15s;
+    }
+
+    .btn-copy:hover {
+      background: var(--subtle-gray);
+      border-color: #d4d4d8;
+    }
+
+    .transcription-output {
+      background: #ffffff;
+      border: 1px solid var(--border);
+      border-radius: 10px;
+      padding: 18px;
+      font-size: 1.15rem;
+      font-weight: 500;
+      line-height: 1.6;
+      color: var(--text-main);
+      min-height: 60px;
+      word-break: break-word;
+    }
+
+    /* Samples Section */
+    .samples-section {
+      margin-top: 32px;
+      padding-top: 24px;
+      border-top: 1px solid var(--border);
+    }
+
+    .samples-label {
+      font-size: 0.82rem;
+      font-weight: 600;
+      text-transform: uppercase;
+      letter-spacing: 0.05em;
+      color: var(--text-muted);
+      margin-bottom: 12px;
+    }
+
+    .sample-chips {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 8px;
+    }
+
+    .sample-chip {
+      background: #ffffff;
+      border: 1px solid var(--border);
+      color: var(--text-main);
+      padding: 7px 14px;
+      border-radius: 8px;
+      font-size: 0.84rem;
+      font-weight: 500;
+      cursor: pointer;
+      transition: all 0.15s ease;
+    }
+
+    .sample-chip:hover {
+      background: var(--accent-black);
+      border-color: var(--accent-black);
+      color: #ffffff;
+    }
+
+    /* Clean Spinner */
+    .spinner {
+      width: 18px;
+      height: 18px;
+      border: 2px solid rgba(255, 255, 255, 0.3);
+      border-radius: 50%;
+      border-top-color: #ffffff;
+      animation: spin 0.7s linear infinite;
+      display: none;
+    }
+
+    @keyframes spin { to { transform: rotate(360deg); } }
+
+    footer {
+      margin-top: 40px;
+      color: var(--text-muted);
+      font-size: 0.82rem;
+      text-align: center;
+    }
+  </style>
+</head>
+<body>
+
+  <div class="brand-tag">
+    <span class="dot"></span>
+    <span>Optical Character Recognition</span>
+  </div>
+
+  <header class="hero-header">
+    <h1>Handwriting to <span class="handwritten">clear text</span></h1>
+    <p class="subtitle">Upload or drop any handwritten snippet to transcribe it into digital text instantly.</p>
+  </header>
+
+  <main class="main-box">
+    <div class="drop-zone" id="dropZone">
+      <input type="file" id="fileInput" accept="image/*">
+      <div class="upload-icon">
+        <svg viewBox="0 0 24 24"><path d="M12 3v13M5 10l7-7 7 7M4 21h16" stroke-linecap="round" stroke-linejoin="round"/></svg>
+      </div>
+      <div class="drop-title">Select or drop handwritten image</div>
+      <div class="drop-hint">Supports PNG, JPG, WEBP</div>
+    </div>
+
+    <div class="preview-section" id="previewSection">
+      <div class="preview-header">
+        <span>Image Preview</span>
+        <button class="btn-clear" id="btnClear">Remove</button>
+      </div>
+      <div class="preview-frame">
+        <img id="previewImg" class="preview-img" alt="Selected Document Preview">
+      </div>
+    </div>
+
+    <div class="actions">
+      <button class="btn-submit" id="submitBtn" disabled>
+        <span class="spinner" id="spinner"></span>
+        <span id="btnText">Transcribe Handwriting</span>
+      </button>
+    </div>
+
+    <div class="result-section" id="resultSection">
+      <div class="result-top">
+        <span class="result-label">Result</span>
+        <button class="btn-copy" id="btnCopy">Copy</button>
+      </div>
+      <div class="transcription-output" id="transcriptionOutput">...</div>
+    </div>
+
+    <div class="samples-section">
+      <div class="samples-label">Test with a sample snippet:</div>
+      <div class="sample-chips" id="sampleChips">
+        <!-- populated dynamically -->
+      </div>
+    </div>
+  </main>
+
+  <footer>
+    <p>Minimalist White & Black OCR Engine</p>
+  </footer>
+
+  <script>
+    const dropZone = document.getElementById('dropZone');
+    const fileInput = document.getElementById('fileInput');
+    const previewSection = document.getElementById('previewSection');
+    const previewImg = document.getElementById('previewImg');
+    const btnClear = document.getElementById('btnClear');
+    const submitBtn = document.getElementById('submitBtn');
+    const spinner = document.getElementById('spinner');
+    const btnText = document.getElementById('btnText');
+    const resultSection = document.getElementById('resultSection');
+    const transcriptionOutput = document.getElementById('transcriptionOutput');
+    const btnCopy = document.getElementById('btnCopy');
+    const sampleChips = document.getElementById('sampleChips');
+
+    let currentFile = null;
+
+    // Load sample snippets
+    fetch('/samples')
+      .then(res => res.json())
+      .then(samples => {
+        samples.forEach((sample, idx) => {
+          const chip = document.createElement('button');
+          chip.className = 'sample-chip';
+          chip.textContent = `Sample ${idx + 1}`;
+          chip.onclick = () => loadSample(sample.url);
+          sampleChips.appendChild(chip);
+        });
+      });
+
+    function loadSample(url) {
+      previewImg.src = url;
+      previewSection.style.display = 'block';
+      submitBtn.disabled = false;
+      resultSection.style.display = 'none';
+
+      fetch(url)
+        .then(r => r.blob())
+        .then(blob => {
+          currentFile = new File([blob], "sample.png", { type: "image/png" });
+        });
+    }
+
+    fileInput.addEventListener('change', (e) => {
+      const file = e.target.files[0];
+      if (file) {
+        currentFile = file;
+        const reader = new FileReader();
+        reader.onload = (ev) => {
+          previewImg.src = ev.target.result;
+          previewSection.style.display = 'block';
+          submitBtn.disabled = false;
+          resultSection.style.display = 'none';
+        };
+        reader.readAsDataURL(file);
+      }
+    });
+
+    btnClear.addEventListener('click', () => {
+      currentFile = null;
+      fileInput.value = '';
+      previewSection.style.display = 'none';
+      submitBtn.disabled = true;
+      resultSection.style.display = 'none';
+    });
+
+    dropZone.addEventListener('dragover', (e) => {
+      e.preventDefault();
+      dropZone.classList.add('dragover');
+    });
+
+    dropZone.addEventListener('dragleave', () => dropZone.classList.remove('dragover'));
+
+    dropZone.addEventListener('drop', (e) => {
+      e.preventDefault();
+      dropZone.classList.remove('dragover');
+      if (e.dataTransfer.files.length) {
+        fileInput.files = e.dataTransfer.files;
+        fileInput.dispatchEvent(new Event('change'));
+      }
+    });
+
+    submitBtn.addEventListener('click', async () => {
+      if (!currentFile) return;
+
+      submitBtn.disabled = true;
+      spinner.style.display = 'inline-block';
+      btnText.textContent = 'Transcribing...';
+      resultSection.style.display = 'none';
+
+      const formData = new FormData();
+      formData.append('image', currentFile);
+
+      try {
+        const resp = await fetch('/predict', {
+          method: 'POST',
+          body: formData
+        });
+        const data = await resp.json();
+        transcriptionOutput.textContent = data.text || "No text detected.";
+        resultSection.style.display = 'block';
+      } catch (err) {
+        transcriptionOutput.textContent = "Error transcribing image.";
+        resultSection.style.display = 'block';
+      } finally {
+        submitBtn.disabled = false;
+        spinner.style.display = 'none';
+        btnText.textContent = 'Transcribe Handwriting';
+      }
+    });
+
+    btnCopy.addEventListener('click', () => {
+      navigator.clipboard.writeText(transcriptionOutput.textContent);
+      btnCopy.textContent = 'Copied!';
+      setTimeout(() => btnCopy.textContent = 'Copy', 2000);
+    });
+  </script>
+</body>
+</html>
