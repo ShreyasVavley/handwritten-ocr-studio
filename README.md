@@ -1,4 +1,4 @@
-# ScribeCraft • Handwritten Text Recognition (HTR) Studio
+# ScribeCraft Pro • Handwritten Text Recognition (HTR) Studio
 
 <div align="center">
 
@@ -10,24 +10,39 @@
 [![Code Style: Black](https://img.shields.io/badge/Code%20Style-Black-000000.svg)](https://github.com/psf/black)
 
 <p align="center">
-  <strong>An AI-powered document transcription web application designed with a minimalist Ivory aesthetic and powered by deep neural OCR.</strong>
+  <strong>A high-performance document transcription suite featuring an interactive digital handwriting drawing canvas, multi-page PDF processing, automatic CV enhancements, and a warm Ivory aesthetic.</strong>
 </p>
 
 </div>
 
 ---
 
-## 🌟 Highlights
-- **Intelligent Handwriting Recognition**: Accurately recognizes cursive handwriting, doctor notes, signatures, and natural script using deep CRAFT text detection and ResNet-LSTM sequence recognition.
-- **Ivory & Obsidian UI**: A serene, distraction-free aesthetic with warm ivory canvas (`#fcfbf9`), crisp cards, smooth drag-and-drop file upload, and one-click clipboard copy.
-- **Multi-Page PDF & Batch Processing**: Ingest and transcribe entire multi-page PDF documents or image batches in parallel.
-- **Automatic Image Enhancement**: Built-in automated deskew, contrast boost (CLAHE), and adaptive binarization filters.
-- **Multi-Format Exports**: One-click download as Word (`.docx`), Searchable PDF, Spreadsheet CSV, or plain text.
-- **Fine-Tuning Toolchain**: End-to-end pipelines for generating custom synthetic cursive handwriting datasets and fine-tuning CRNN/CTC or Tesseract 5 LSTM models on Google Colab.
+## 🌟 Pro Features & Highlights
+
+### ✍️ Interactive Digital Handwriting Slate
+- **Live Canvas Drawing**: Scribble cursive, signatures, or notes directly on the screen using your mouse, trackpad, or touchscreen stylus.
+- **Multiple Ink Types & Nib Sizes**: Toggle between Classic Obsidian (`#18181b`), Fountain Pen Blue (`#1d4ed8`), or Forest Green (`#047857`) with adjustable line width.
+- **Ruled Paper Guidelines**: Realistic cursive handwriting baseline guides to keep letter proportions straight.
+- **Instant Real-Time OCR**: Transcribe your digital strokes in seconds with one click.
+
+### 📑 Multi-Page PDF & Batch Uploads
+- Ingest entire multi-page PDF binders, scanned folders, or multiple images simultaneously.
+- Sequential rendering via `pypdfium2` with structured, page-by-page feed cards.
+
+### 🪄 Automated Computer Vision Enhancements
+- **Auto-Deskew**: Automatically detects rotated, crooked, or tilted handwriting lines and straightens them.
+- **Contrast Boost (CLAHE)**: Enhances faint ballpoint ink, pencil notes, and camera shadows.
+- **Adaptive Binarization**: Cleans uneven lighting gradients, leaving crisp black text on white paper.
+
+### 💾 Multi-Format Document Exporting
+- **📄 Word (.docx)**: Fully formatted Microsoft Word documents.
+- **📑 Searchable PDF**: Formatted standard PDF with custom font layout.
+- **📊 CSV (.csv)**: Line-numbered tabular output for data analysis and spreadsheets.
+- **📝 TXT**: Clean UTF-8 plain text file.
 
 ---
 
-## 🚀 Getting Started
+## 🚀 Quickstart
 
 ### 1. Clone the Repository
 ```bash
@@ -40,11 +55,11 @@ cd handwritten-ocr-studio
 pip install -r requirements.txt
 ```
 
-### 3. Launch the Web Studio
+### 3. Launch the Studio
 ```bash
 python app.py
 ```
-Open your browser and navigate to:
+Open your browser at:
 ```
 http://127.0.0.1:5000
 ```
@@ -54,19 +69,19 @@ http://127.0.0.1:5000
 ## 🛠️ Project Structure
 ```
 handwritten-ocr-studio/
-├── .github/workflows/ci.yml   # Automated GitHub Actions CI workflow
-├── app.py                     # Flask web server & EasyOCR inference engine
-├── enhancement.py             # Image enhancement (deskew, CLAHE contrast, binarization)
-├── exporters.py               # Exporters for .docx, .pdf, .csv, and .txt
+├── .github/workflows/ci.yml   # Automated GitHub Actions CI test suite
+├── app.py                     # Flask server, multi-page PDF engine & EasyOCR inference
+├── enhancement.py             # Computer Vision preprocessing (Deskew, CLAHE, Binarization)
+├── exporters.py               # Document exporters (.docx, .pdf, .csv, and .txt)
 ├── templates/
-│   └── index.html             # Minimalist Ivory & Obsidian web interface
-├── sample_test_data/          # Sample handwriting images & ground truth pairs
-├── generate_synthetic_data.py # Synthetic cursive handwriting generator
-├── train_htr_model.py         # PyTorch CRNN + BiLSTM model training script
-├── predict.py                 # Standalone command-line inference tool
-├── test_client.py             # Automated API test script
-├── Tesseract_HTR_FineTuning.ipynb # Google Colab notebook for Tesseract 5 LSTM
-├── requirements.txt           # Project dependencies
+│   └── index.html             # Ivory & Obsidian interface with live drawing canvas
+├── sample_test_data/          # Synthetic cursive sample snippets
+├── generate_synthetic_data.py # Synthetic cursive dataset generator
+├── train_htr_model.py         # Standalone PyTorch CRNN + BiLSTM model trainer
+├── predict.py                 # CLI inference script
+├── test_client.py             # Automated API testing suite
+├── Tesseract_HTR_FineTuning.ipynb # Google Colab notebook for Tesseract 5 fine-tuning
+├── requirements.txt           # Python package dependencies
 └── README.md                  # Project documentation
 ```
 
