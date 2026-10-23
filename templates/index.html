@@ -19,8 +19,7 @@
       --ivory-hover: #f1ede4;
       --success: #15803d;
       --success-bg: #f0fdf4;
-      --badge-pro: #0284c7;
-      --badge-pro-bg: #e0f2fe;
+      --accent-gold: #b45309;
     }
 
     * { box-sizing: border-box; margin: 0; padding: 0; }
@@ -39,8 +38,8 @@
 
     .header {
       text-align: center;
-      max-width: 700px;
-      margin-bottom: 30px;
+      max-width: 720px;
+      margin-bottom: 28px;
     }
 
     .badge-wrap {
@@ -93,7 +92,7 @@
     /* Main Container */
     .portal-box {
       width: 100%;
-      max-width: 800px;
+      max-width: 820px;
       background: var(--ivory-card);
       border: 1px solid var(--card-border);
       border-radius: 24px;
@@ -101,13 +100,48 @@
       box-shadow: 0 10px 30px -10px rgba(28, 25, 23, 0.05);
     }
 
-    /* Pro Features Toolbar */
+    /* Input Mode Tabs */
+    .mode-tabs {
+      display: flex;
+      gap: 8px;
+      margin-bottom: 20px;
+      background: var(--ivory-subtle);
+      padding: 6px;
+      border-radius: 14px;
+      border: 1px solid var(--card-border);
+    }
+
+    .tab-btn {
+      flex: 1;
+      padding: 10px 16px;
+      border: none;
+      border-radius: 10px;
+      background: transparent;
+      color: var(--text-muted);
+      font-size: 0.9rem;
+      font-weight: 600;
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 8px;
+      transition: all 0.2s ease;
+    }
+
+    .tab-btn.active {
+      background: #ffffff;
+      color: var(--text-main);
+      box-shadow: 0 2px 8px rgba(0, 0, 0, 0.04);
+      border: 1px solid var(--card-border);
+    }
+
+    /* Enhancement Toolbar */
     .pro-toolbar {
       background: var(--ivory-subtle);
       border: 1px solid var(--card-border);
       border-radius: 14px;
-      padding: 14px 18px;
-      margin-bottom: 24px;
+      padding: 12px 18px;
+      margin-bottom: 22px;
       display: flex;
       flex-wrap: wrap;
       justify-content: space-between;
@@ -116,7 +150,7 @@
     }
 
     .toolbar-title {
-      font-size: 0.82rem;
+      font-size: 0.8rem;
       font-weight: 700;
       text-transform: uppercase;
       letter-spacing: 0.05em;
@@ -136,7 +170,7 @@
       display: inline-flex;
       align-items: center;
       gap: 6px;
-      font-size: 0.84rem;
+      font-size: 0.82rem;
       font-weight: 500;
       color: var(--text-main);
       cursor: pointer;
@@ -149,7 +183,11 @@
       cursor: pointer;
     }
 
-    /* Drop Zone */
+    /* Tab Panes */
+    .tab-pane { display: none; }
+    .tab-pane.active { display: block; }
+
+    /* File Drop Zone */
     .drop-zone {
       position: relative;
       border: 2px dashed #ded7cb;
@@ -196,18 +234,107 @@
     }
 
     .drop-title {
-      font-size: 1.08rem;
+      font-size: 1.05rem;
       font-weight: 600;
       margin-bottom: 4px;
-      color: var(--text-main);
     }
 
     .drop-hint {
       color: var(--text-muted);
-      font-size: 0.86rem;
+      font-size: 0.85rem;
     }
 
-    /* File Queue Tray */
+    /* Digital Canvas Pane */
+    .canvas-container {
+      background: var(--ivory-subtle);
+      border: 1px solid var(--card-border);
+      border-radius: 16px;
+      padding: 16px;
+    }
+
+    .canvas-controls {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 12px;
+      flex-wrap: wrap;
+      gap: 10px;
+    }
+
+    .pen-tools {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+    }
+
+    .pen-label {
+      font-size: 0.8rem;
+      font-weight: 600;
+      text-transform: uppercase;
+      letter-spacing: 0.04em;
+      color: var(--text-muted);
+    }
+
+    .color-dot {
+      width: 22px;
+      height: 22px;
+      border-radius: 50%;
+      cursor: pointer;
+      border: 2px solid transparent;
+      transition: transform 0.15s;
+    }
+    .color-dot:hover { transform: scale(1.15); }
+    .color-dot.active { border-color: var(--accent-black); }
+
+    .canvas-actions {
+      display: flex;
+      gap: 8px;
+    }
+
+    .btn-canvas-action {
+      background: #ffffff;
+      border: 1px solid var(--card-border);
+      color: var(--text-main);
+      padding: 6px 12px;
+      border-radius: 8px;
+      font-size: 0.8rem;
+      font-weight: 600;
+      cursor: pointer;
+      display: inline-flex;
+      align-items: center;
+      gap: 4px;
+    }
+    .btn-canvas-action:hover { background: var(--ivory-hover); }
+
+    .drawing-board-wrapper {
+      position: relative;
+      background: #ffffff;
+      border: 1px solid #ded7cb;
+      border-radius: 12px;
+      box-shadow: inset 0 2px 4px rgba(0, 0, 0, 0.02);
+      cursor: crosshair;
+      overflow: hidden;
+    }
+
+    /* Lined handwriting guide background */
+    .drawing-board-wrapper::before {
+      content: "";
+      position: absolute;
+      inset: 0;
+      background-image: linear-gradient(#f1ede4 1px, transparent 1px);
+      background-size: 100% 36px;
+      pointer-events: none;
+      opacity: 0.7;
+    }
+
+    #drawingCanvas {
+      display: block;
+      width: 100%;
+      height: 220px;
+      touch-action: none;
+    }
+
+    /* Queue Tray */
     .queue-tray {
       margin-top: 18px;
       display: none;
@@ -221,7 +348,6 @@
       font-size: 0.8rem;
       font-weight: 600;
       text-transform: uppercase;
-      letter-spacing: 0.04em;
       color: var(--text-muted);
     }
 
@@ -229,7 +355,7 @@
       display: flex;
       flex-direction: column;
       gap: 6px;
-      max-height: 150px;
+      max-height: 140px;
       overflow-y: auto;
     }
 
@@ -242,13 +368,6 @@
       padding: 8px 14px;
       border-radius: 8px;
       font-size: 0.85rem;
-    }
-
-    .queue-item-name {
-      font-weight: 500;
-      display: flex;
-      align-items: center;
-      gap: 6px;
     }
 
     .btn-clear-all {
@@ -304,6 +423,12 @@
       border-radius: 16px;
       padding: 24px;
       display: none;
+      animation: fadeIn 0.25s ease-out;
+    }
+
+    @keyframes fadeIn {
+      from { opacity: 0; transform: translateY(6px); }
+      to { opacity: 1; transform: translateY(0); }
     }
 
     .result-top {
@@ -320,10 +445,8 @@
       font-weight: 700;
       text-transform: uppercase;
       letter-spacing: 0.05em;
-      color: var(--text-main);
     }
 
-    /* Export Controls */
     .export-tray {
       display: flex;
       align-items: center;
@@ -454,26 +577,38 @@
   <header class="header">
     <div class="badge-wrap">
       <span class="pro-pill">PRO</span>
-      <span>Multi-Page PDF & Batch OCR Studio</span>
+      <span>Live Drawing Canvas & Multi-Page OCR</span>
     </div>
     <h1>Turn <span class="handwritten">handwritten notes</span> into clear text</h1>
-    <p class="subtitle">Upload whole multi-page PDFs or batch image files with automatic deskew, contrast boost, and multi-format exports.</p>
+    <p class="subtitle">Upload whole document PDFs, or write cursive directly on the interactive digital slate for real-time AI transcription.</p>
   </header>
 
   <main class="portal-box">
     
+    <!-- Mode Tabs -->
+    <div class="mode-tabs">
+      <button class="tab-btn active" id="tabUploadBtn" onclick="switchMode('upload')">
+        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 15v4a2 2 0 01-2 2H5a2 2 0 01-2-2v-4M17 8l-5-5-5 5M12 3v12"/></svg>
+        Upload File or PDF
+      </button>
+      <button class="tab-btn" id="tabDrawBtn" onclick="switchMode('draw')">
+        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 19l7-7 3 3-7 7-3-3zM18 13l-1.5-1.5M2 22l5-1 12-12-4-4L3 17l-1 5z"/></svg>
+        Live Drawing Slate
+      </button>
+    </div>
+
     <!-- Pro Enhancement Toolbar -->
     <div class="pro-toolbar">
       <div class="toolbar-title">
         <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"></polygon></svg>
-        AI Enhancement Filters
+        Enhancement Filters
       </div>
       <div class="toggles-group">
         <label class="toggle-label">
           <input type="checkbox" id="toggleDeskew" checked> Auto-Deskew
         </label>
         <label class="toggle-label">
-          <input type="checkbox" id="toggleContrast" checked> Contrast Boost (CLAHE)
+          <input type="checkbox" id="toggleContrast" checked> Contrast Boost
         </label>
         <label class="toggle-label">
           <input type="checkbox" id="toggleBinarize"> Adaptive Binarization
@@ -481,25 +616,50 @@
       </div>
     </div>
 
-    <!-- Drop Zone -->
-    <div class="drop-zone" id="dropZone">
-      <input type="file" id="fileInput" accept="image/*,.pdf" multiple>
-      <div class="upload-icon">
-        <svg viewBox="0 0 24 24"><path d="M12 3v13M5 10l7-7 7 7M4 21h16" stroke-linecap="round" stroke-linejoin="round"/></svg>
+    <!-- PANE 1: File Upload -->
+    <div class="tab-pane active" id="uploadPane">
+      <div class="drop-zone" id="dropZone">
+        <input type="file" id="fileInput" accept="image/*,.pdf" multiple>
+        <div class="upload-icon">
+          <svg viewBox="0 0 24 24"><path d="M12 3v13M5 10l7-7 7 7M4 21h16" stroke-linecap="round" stroke-linejoin="round"/></svg>
+        </div>
+        <div class="drop-title">Drop PDF or multiple images here</div>
+        <div class="drop-hint">Supports Multi-page PDF, PNG, JPG, WEBP • Batch upload ready</div>
       </div>
-      <div class="drop-title">Drop PDF or multiple images here</div>
-      <div class="drop-hint">Supports Multi-page PDF, PNG, JPG, WEBP • Batch upload ready</div>
+
+      <div class="queue-tray" id="queueTray">
+        <div class="queue-header">
+          <span id="queueCount">Files Ready (0)</span>
+          <button class="btn-clear-all" id="btnClearAll">Clear all</button>
+        </div>
+        <div class="queue-items" id="queueItems"></div>
+      </div>
     </div>
 
-    <!-- Queue Tray -->
-    <div class="queue-tray" id="queueTray">
-      <div class="queue-header">
-        <span id="queueCount">Files Ready (0)</span>
-        <button class="btn-clear-all" id="btnClearAll">Clear all</button>
+    <!-- PANE 2: Live Digital Drawing Slate -->
+    <div class="tab-pane" id="drawPane">
+      <div class="canvas-container">
+        <div class="canvas-controls">
+          <div class="pen-tools">
+            <span class="pen-label">Ink:</span>
+            <div class="color-dot active" style="background: #18181b;" onclick="setInkColor('#18181b', this)"></div>
+            <div class="color-dot" style="background: #1d4ed8;" onclick="setInkColor('#1d4ed8', this)"></div>
+            <div class="color-dot" style="background: #047857;" onclick="setInkColor('#047857', this)"></div>
+            <span class="pen-label" style="margin-left: 10px;">Size:</span>
+            <input type="range" id="penWidth" min="2" max="10" value="4" style="width: 75px; accent-color: var(--accent-black);">
+          </div>
+          <div class="canvas-actions">
+            <button class="btn-canvas-action" id="btnClearCanvas">🗑️ Clear Slate</button>
+          </div>
+        </div>
+
+        <div class="drawing-board-wrapper">
+          <canvas id="drawingCanvas"></canvas>
+        </div>
       </div>
-      <div class="queue-items" id="queueItems"></div>
     </div>
 
+    <!-- Action Bar -->
     <div class="actions">
       <button class="btn-transcribe" id="submitBtn" disabled>
         <span class="spinner" id="spinner"></span>
@@ -530,10 +690,20 @@
   </main>
 
   <footer>
-    <p>ScribeCraft Pro • Powered by EasyOCR + Computer Vision Pipeline</p>
+    <p>ScribeCraft Pro • Interactive Handwriting Intelligence</p>
   </footer>
 
   <script>
+    let activeMode = 'upload'; // 'upload' or 'draw'
+    let queuedFiles = [];
+    let latestCombinedText = "";
+    let hasDrawn = false;
+
+    // Elements
+    const uploadPane = document.getElementById('uploadPane');
+    const drawPane = document.getElementById('drawPane');
+    const tabUploadBtn = document.getElementById('tabUploadBtn');
+    const tabDrawBtn = document.getElementById('tabDrawBtn');
     const dropZone = document.getElementById('dropZone');
     const fileInput = document.getElementById('fileInput');
     const queueTray = document.getElementById('queueTray');
@@ -551,10 +721,127 @@
     const toggleContrast = document.getElementById('toggleContrast');
     const toggleBinarize = document.getElementById('toggleBinarize');
 
-    let queuedFiles = [];
-    let latestCombinedText = "";
+    // Canvas Setup
+    const canvas = document.getElementById('drawingCanvas');
+    const ctx = canvas.getContext('2d');
+    const penWidth = document.getElementById('penWidth');
+    const btnClearCanvas = document.getElementById('btnClearCanvas');
+    let isDrawing = false;
+    let currentColor = '#18181b';
 
-    // Load sample snippets
+    function resizeCanvas() {
+      const rect = canvas.getBoundingClientRect();
+      if (rect.width > 0 && rect.height > 0) {
+        // Save current strokes before resize
+        const tempCanvas = document.createElement('canvas');
+        tempCanvas.width = canvas.width;
+        tempCanvas.height = canvas.height;
+        const tempCtx = tempCanvas.getContext('2d');
+        tempCtx.drawImage(canvas, 0, 0);
+
+        canvas.width = rect.width * 2;
+        canvas.height = rect.height * 2;
+        ctx.scale(2, 2);
+
+        // Fill white background for clean OCR
+        ctx.fillStyle = "#ffffff";
+        ctx.fillRect(0, 0, rect.width, rect.height);
+        ctx.drawImage(tempCanvas, 0, 0, rect.width, rect.height);
+      }
+    }
+
+    function initCanvas() {
+      const rect = canvas.getBoundingClientRect();
+      canvas.width = rect.width * 2;
+      canvas.height = rect.height * 2;
+      ctx.scale(2, 2);
+      clearCanvas();
+    }
+
+    function clearCanvas() {
+      const rect = canvas.getBoundingClientRect();
+      ctx.fillStyle = "#ffffff";
+      ctx.fillRect(0, 0, rect.width, rect.height);
+      hasDrawn = false;
+      if (activeMode === 'draw') submitBtn.disabled = true;
+    }
+
+    function setInkColor(color, el) {
+      currentColor = color;
+      document.querySelectorAll('.color-dot').forEach(d => d.classList.remove('active'));
+      el.classList.add('active');
+    }
+
+    function getPointerPos(e) {
+      const rect = canvas.getBoundingClientRect();
+      const clientX = e.touches ? e.touches[0].clientX : e.clientX;
+      const clientY = e.touches ? e.touches[0].clientY : e.clientY;
+      return {
+        x: clientX - rect.left,
+        y: clientY - rect.top
+      };
+    }
+
+    function startDraw(e) {
+      isDrawing = true;
+      hasDrawn = true;
+      submitBtn.disabled = false;
+      const pos = getPointerPos(e);
+      ctx.beginPath();
+      ctx.moveTo(pos.x, pos.y);
+    }
+
+    function draw(e) {
+      if (!isDrawing) return;
+      e.preventDefault();
+      const pos = getPointerPos(e);
+      ctx.strokeStyle = currentColor;
+      ctx.lineWidth = penWidth.value;
+      ctx.lineCap = 'round';
+      ctx.lineJoin = 'round';
+      ctx.lineTo(pos.x, pos.y);
+      ctx.stroke();
+    }
+
+    function stopDraw() {
+      if (isDrawing) {
+        ctx.closePath();
+        isDrawing = false;
+      }
+    }
+
+    // Canvas listeners (Mouse + Touch)
+    canvas.addEventListener('mousedown', startDraw);
+    canvas.addEventListener('mousemove', draw);
+    window.addEventListener('mouseup', stopDraw);
+    canvas.addEventListener('touchstart', startDraw, { passive: false });
+    canvas.addEventListener('touchmove', draw, { passive: false });
+    window.addEventListener('touchend', stopDraw);
+
+    btnClearCanvas.addEventListener('click', clearCanvas);
+
+    // Mode Switcher
+    function switchMode(mode) {
+      activeMode = mode;
+      if (mode === 'upload') {
+        uploadPane.classList.add('active');
+        drawPane.classList.remove('active');
+        tabUploadBtn.classList.add('active');
+        tabDrawBtn.classList.remove('active');
+        btnText.textContent = queuedFiles.length ? `Process & Transcribe Batch (${queuedFiles.length})` : 'Process & Transcribe Batch';
+        submitBtn.disabled = queuedFiles.length === 0;
+      } else {
+        uploadPane.classList.remove('active');
+        drawPane.classList.add('active');
+        tabUploadBtn.classList.remove('active');
+        tabDrawBtn.classList.add('active');
+        btnText.textContent = 'Transcribe Drawn Text';
+        submitBtn.disabled = !hasDrawn;
+        setTimeout(initCanvas, 50);
+      }
+    }
+
+    // Samples
     fetch('/samples')
       .then(res => res.json())
       .then(samples => {
@@ -568,6 +855,7 @@
       });
 
     function loadSample(url, name) {
+      switchMode('upload');
       fetch(url)
         .then(r => r.blob())
         .then(blob => {
@@ -582,18 +870,20 @@
       if (queuedFiles.length === 0) {
         queueTray.style.display = 'none';
         submitBtn.disabled = true;
+        btnText.textContent = 'Process & Transcribe Batch';
         return;
       }
 
       queueTray.style.display = 'block';
       queueCount.textContent = `Files Ready (${queuedFiles.length})`;
       submitBtn.disabled = false;
+      btnText.textContent = `Process & Transcribe (${queuedFiles.length})`;
 
-      queuedFiles.forEach((f, i) => {
+      queuedFiles.forEach(f => {
         const item = document.createElement('div');
         item.className = 'queue-item';
         item.innerHTML = `
-          <span class="queue-item-name">📄 ${f.name}</span>
+          <span style="font-weight: 500;">📄 ${f.name}</span>
           <span style="color: var(--text-muted); font-size: 0.8rem;">${(f.size / 1024).toFixed(1)} KB</span>
         `;
         queueItems.appendChild(item);
@@ -625,19 +915,28 @@
       }
     });
 
+    // Execute Transcription (File Batch or Canvas)
     submitBtn.addEventListener('click', async () => {
-      if (queuedFiles.length === 0) return;
-
       submitBtn.disabled = true;
       spinner.style.display = 'inline-block';
-      btnText.textContent = `Analyzing & Transcribing ${queuedFiles.length} file(s)...`;
       resultSection.style.display = 'none';
 
       const formData = new FormData();
-      queuedFiles.forEach(f => formData.append('files', f));
       formData.append('deskew', toggleDeskew.checked);
       formData.append('contrast', toggleContrast.checked);
       formData.append('binarize', toggleBinarize.checked);
+
+      if (activeMode === 'draw') {
+        btnText.textContent = 'Transcribing drawing slate...';
+        // Convert canvas to blob file
+        const blob = await new Promise(resolve => canvas.toBlob(resolve, 'image/png'));
+        const drawnFile = new File([blob], "digital_slate_drawing.png", { type: "image/png" });
+        formData.append('files', drawnFile);
+      } else {
+        if (queuedFiles.length === 0) return;
+        btnText.textContent = `Analyzing ${queuedFiles.length} file(s)...`;
+        queuedFiles.forEach(f => formData.append('files', f));
+      }
 
       try {
         const resp = await fetch('/predict_batch', {
@@ -660,11 +959,11 @@
 
         resultSection.style.display = 'block';
       } catch (err) {
-        alert("Error processing batch: " + err);
+        alert("Error during transcription: " + err);
       } finally {
         submitBtn.disabled = false;
         spinner.style.display = 'none';
-        btnText.textContent = 'Process & Transcribe Batch';
+        btnText.textContent = activeMode === 'draw' ? 'Transcribe Drawn Text' : `Process & Transcribe (${queuedFiles.length || 'Batch'})`;
       }
     });
 
@@ -693,6 +992,8 @@
       form.submit();
       document.body.removeChild(form);
     }
+
+    window.addEventListener('resize', resizeCanvas);
   </script>
 </body>
 </html>
